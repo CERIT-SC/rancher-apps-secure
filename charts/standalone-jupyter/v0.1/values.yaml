@@ -1,4 +1,4 @@
-image: "jupyter/minimal-notebook:latest"
+image: "Minimal NB"
 customimage: ""
 notebookToken: ""
 resources:
