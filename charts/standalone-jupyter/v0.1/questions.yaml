@@ -19,28 +19,28 @@ questions:
     - "Custom"
   type: enum
   group: "Image"
-  show_subquestion_if: "image=Custom"
+  show_subquestion_if: "Custom"
   subquestions:
   - variable: customimage
-    description: "Custom image name."
+    description: "Custom image name"
     group: "Image"
     label: Custom image
     type: string
 - variable: notebookToken
   required: true
-  description: "You must enter the token used to log into the notebook.  You need to remember the token!"
+  description: "You must enter the token used to log into the notebook. You need to remember the token!"
   type: password
   label: Notebook token (please avoid chars "{" and "}")
   group: "Security"
   invalid_chars: "{}"
 - variable: networkpolicy
   required: false
-  description: "Enable Network Policy that restrict access to RStudio only from outside of cluster (if enabled)."
+  description: "Enable Network Policy that restrict access to Jupyter Notebook only from outside of cluster (if enabled)."
   label: Network Policy Enable
   type: boolean
   group: "Security"
 - variable: storage.peristentvolume
-  description: "Mount persistent volume to home (optional)."
+  description: "Mount persistent volume to home (optional)"
   group: "Storage"
   label: "Persistent home"
   type: pvc
@@ -61,7 +61,7 @@ questions:
     group: "Storage"
     type: enum
   - variable: storage.username
-    description: "Storage connect username"
+    description: "Storage username"
     label: Storage username
     required: true
     default: ""
@@ -69,7 +69,7 @@ questions:
     group: "Storage"
   - variable: storage.password
     label: Storage password
-    description: "Storage connect password"
+    description: "Storage password"
     default: ""
     required: true
     type: password
