@@ -19,13 +19,13 @@ questions:
     - "Custom"
   type: enum
   group: "Image"
-  show_subquestion_if: "Custom"
-  subquestions:
-  - variable: customimage
-    description: "Custom image name"
-    group: "Image"
-    label: Custom image
-    type: string
+- variable: customimage
+  required: true
+  description: "Custom image name"
+  group: "Image"
+  label: Custom image
+  type: string
+  show_if: "image=Custom"
 - variable: notebookToken
   required: true
   description: "You must enter the token used to log into the notebook. You need to remember the token!"
