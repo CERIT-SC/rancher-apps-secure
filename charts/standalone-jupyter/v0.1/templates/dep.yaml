@@ -94,7 +94,7 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-{{ include "storage.name" . }}
 {{- end }}
-{{- if lt (.Values.resources.gpu | int) }}
+{{- if lt 0 (.Values.resources.gpu | int) }}
         - name: dshm
           emptyDir:
             medium: Memory
