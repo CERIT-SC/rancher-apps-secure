@@ -42,8 +42,8 @@ questions:
   description: "Mount persistent volume to home (optional)"
   group: "Storage"
   label: "Persistent home"
-  type: pvc
-  required: false
+  type: boolean
+  default: false
 - variable: storage.enable
   description: "Connect external storage"
   type: boolean
