@@ -61,13 +61,13 @@ spec:
             cpu: {{ .Values.resources.maxcpu }}
             memory: {{ .Values.resources.maxram }}
             ephemeral-storage: "10Gi"
-{{- if lt 0 .Values.resources.gpu }}
+{{- if lt 0 (.Values.resources.gpu | int) }}
             nvidia.com/gpu: {{ .Values.resources.gpu }}
 {{- end }}
           requests:
             cpu: {{ .Values.resources.mincpu }}
             memory: {{ .Values.resources.minram }}
-{{- if lt 0 .Values.resources.gpu }}
+{{- if lt 0 (.Values.resources.gpu | int) }}
             nvidia.com/gpu: {{ .Values.resources.gpu }}
 {{- end }}
         volumeMounts:
@@ -79,7 +79,7 @@ spec:
           - name: data
             mountPath: /storage
 {{- end }}
-{{- if lt 0 .Values.resources.gpu }}
+{{- if lt 0 (.Values.resources.gpu | int) }}
           - name: dshm
             mountPath: /dev/shm
 {{- end }}
@@ -94,7 +94,7 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-{{ include "storage.name" . }}
 {{- end }}
-{{- if lt 0 .Values.resources.gpu }}
+{{- if lt (.Values.resources.gpu | int) }}
         - name: dshm
           emptyDir:
             medium: Memory
