@@ -43,7 +43,7 @@ spec:
 {{- $_ := set $imageTypes "Scipy NB" "cerit.io/hubs/scipynb:26-01-202" }}
 {{- $_ := set $imageTypes "TensorFlow NB" "cerit.io/hubs/tensorflownb:26-01-2022" }}
 {{- $_ := set $imageTypes "TensorFlow 2.7.0 with GPU and TensorBoard" "cerit.io/hubs/tensorflowgpu-11-0:14-02-2022-1" }}
-{{- $_ := set $imageTypes "Custom" {{ .Values.customimage }} }}
+{{- $_ := set $imageTypes "Custom" .Values.customimage }}
         image: {{ get $imageTypes .Values.image }}
         command: ["start-notebook.sh"]
         args: [{{ printf "\"--NotebookApp.token='%s'\"" .Values.notebookToken }}]
