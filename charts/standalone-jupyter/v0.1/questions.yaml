@@ -1,0 +1,108 @@
+labels:
+  io.rancher.certified: CERIT-SC
+
+rancher_min_version: 2.5.0
+
+categories:
+- WEB Apps
+- Developement
+
+questions:
+- variable: image
+  description: Jupyter Notebook Image
+  options:
+    - "Minimal NB"
+    - "Datascience NB"
+    - "Scipy NB"
+    - "TensorFlow NB"
+    - "TensorFlow 2.7.0 with GPU and TensorBoard"
+    - "Custom"
+  type: enum
+  group: "Image"
+  show_subquestion_if: "image=Custom"
+  subquestions:
+  - variable: customimage
+    description: "Custom image name."
+    group: "Image"
+    label: Custom image
+    type: string
+- variable: notebookToken
+  required: true
+  description: "You must enter the token used to log into the notebook.  You need to remember the token!"
+  type: password
+  label: Notebook token (please avoid chars "{" and "}")
+  group: "Security"
+  invalid_chars: "{}"
+- variable: networkpolicy
+  required: false
+  description: "Enable Network Policy that restrict access to RStudio only from outside of cluster (if enabled)."
+  label: Network Policy Enable
+  type: boolean
+  group: "Security"
+- variable: storage.peristentvolume
+  description: "Mount persistent volume to home (optional)."
+  group: "Storage"
+  label: "Persistent home"
+  type: pvc
+  required: false
+- variable: storage.enable
+  description: "Connect external storage"
+  type: boolean
+  group: "Storage"
+  label: External storage
+  show_subquestion_if: true
+  subquestions:
+  - variable: storage.server
+    description: "Connect chosen storage as /storage"
+    label: Storage hostname
+    required: true
+    options:
+     - "storage-elixir1.priv.cerit-sc.cz/share"
+    group: "Storage"
+    type: enum
+  - variable: storage.username
+    description: "Storage connect username"
+    label: Storage username
+    required: true
+    default: ""
+    type: string
+    group: "Storage"
+  - variable: storage.password
+    label: Storage password
+    description: "Storage connect password"
+    default: ""
+    required: true
+    type: password
+    group: "Storage"
+- variable: resources.mincpu
+  default: 1
+  description: "Minimum guaranteed CPUs"
+  type: string
+  label: Min CPU
+  group: "Resources"
+- variable: resources.maxcpu
+  default: 4
+  description: "Maximum allowed CPUs"
+  type: string
+  label: Max CPU
+  group: "Resources"
+- variable: resources.minram
+  default: "2048Mi"
+  description: "Minimum guaranteed RAM"
+  type: string
+  label: Min RAM
+  group: "Resources"
+- variable: resources.maxram
+  default: "4096Mi"
+  description: "Maximum allowed RAM"
+  type: string
+  label: Max RAM
+  group: "Resources"
+- variable: resources.gpu
+  default: "0"
+  description: "Number of GPUs assigned to notebook"
+  type: int
+  max: 1
+  label: GPU
+  group: "Resources"
+  show_if: "image=TensorFlow 2.7.0 with GPU and TensorBoard"

@@ -1,0 +1,16 @@
+image: "jupyter/minimal-notebook:latest"
+customimage: ""
+notebookToken: ""
+resources:
+  mincpu: 1
+  maxcpu: 4
+  minram: 2048Mi
+  maxram: 4096Mi
+  gpu: 0
+storage:
+  enable: false
+  persistenthome: false
+  server: ""
+  username: ""
+  password: ""
+networkpolicy: false
