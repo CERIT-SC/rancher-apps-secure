@@ -56,9 +56,16 @@ questions:
     label: Storage hostname
     required: true
     options:
-     - "storage-elixir1.priv.cerit-sc.cz/share"
+     - "storage-elixir1.priv.cerit-sc.cz"
     group: "Storage"
     type: enum
+  - variable: storage.share
+    description: "Storage server share to mount"
+    label: Storage share
+    required: true
+    default: "/share"
+    type: string
+    group: "Storage"
   - variable: storage.username
     description: "Storage username"
     label: Storage username

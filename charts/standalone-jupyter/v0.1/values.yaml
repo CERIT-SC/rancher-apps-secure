@@ -11,6 +11,7 @@ storage:
   enable: false
   persistenthome: false
   server: ""
+  share: "/share"
   username: ""
   password: ""
 networkpolicy: false
