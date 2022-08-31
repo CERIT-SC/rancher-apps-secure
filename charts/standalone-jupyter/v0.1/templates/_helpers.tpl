@@ -7,5 +7,5 @@
 {{- end -}}
 
 {{- define "storage.name" -}}
-{{ printf "%s-%s-%s" .Release.Name .Release.Namespace .Values.storage.server | regexFind "^[^/]*" | replace "." "-" | trunc 59 }}
+{{ printf "%s-%s-%s" .Release.Name .Release.Namespace .Values.storage.server | regexFind "^[^/]*" | replace "." "-" | trunc 59 | trimSuffix "-" }}
 {{- end -}}
