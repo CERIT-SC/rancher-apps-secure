@@ -1,0 +1,24 @@
+apiVersion: v1
+name: personal-monitoring
+version: 0.0.14
+appVersion: 0.0.2
+description: Personal Monitoring v0.0.2
+icon: file://logo.svg
+keywords:
+- Monitoring
+- Personal
+- Grafana
+- Prometheus
+- Metrics
+home: https://cerit.io
+sources:
+- https://github.com/CERIT-SC/rancher-apps-secure
+maintainers:
+- name: CERIT-SC
+  email: root@cerit-sc.cz
+engine: gotpl
+type: application
+dependencies:
+  - name: monitoring-personal
+    version: "0.0.14"
+    repository: "https://cerit-sc.github.io/helm-charts"
