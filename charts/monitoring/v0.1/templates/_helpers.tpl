@@ -12,7 +12,7 @@
 {{- end -}}
 
 {{- define "dns.name" -}}
-{{ printf "%s-%s.dyn.cloud.trusted.e-infra.cz" (trunc 15 (include "customhostname" .)) (trunc -15 .Release.Namespace) }}
+{{ printf "%s-%s.dyn.cloud.trusted.e-infra.cz" (trunc 15 .Values.customhostname .)) (trunc -15 .Release.Namespace) }}
 {{- end -}}
 
 {{- define "secret.name" -}}
