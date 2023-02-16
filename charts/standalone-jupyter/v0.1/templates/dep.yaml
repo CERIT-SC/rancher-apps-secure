@@ -60,7 +60,7 @@ spec:
           limits:
             cpu: {{ .Values.resources.maxcpu }}
             memory: {{ .Values.resources.maxram }}
-            ephemeral-storage: "10Gi"
+            ephemeral-storage: "50Gi"
 {{- if lt 0 (.Values.resources.gpu | int) }}
             nvidia.com/gpu: {{ .Values.resources.gpu }}
 {{- end }}
