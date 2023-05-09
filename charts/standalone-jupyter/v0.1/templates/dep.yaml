@@ -56,6 +56,10 @@ spec:
         - containerPort: 8888
         securityContext:
           runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
         resources:
           limits:
             cpu: {{ .Values.resources.maxcpu }}
@@ -83,6 +87,10 @@ spec:
           - name: dshm
             mountPath: /dev/shm
 {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
 {{- if .Values.storage.persistenthome }}
         - name: home
