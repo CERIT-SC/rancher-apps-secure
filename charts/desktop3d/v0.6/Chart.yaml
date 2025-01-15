@@ -2,7 +2,7 @@ apiVersion: v1
 name: desktop
 version: 0.6
 appVersion: 0.6
-description: Remote Desktop
+description: Remote Desktop Secure
 icon: file://charts/desktop3d/v0.6/logo.png
 keywords:
 - Remote desktop
