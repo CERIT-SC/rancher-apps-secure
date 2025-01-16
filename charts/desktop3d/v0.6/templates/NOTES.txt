@@ -5,7 +5,7 @@ APP VERSION: {{ .Chart.AppVersion }}
 ** Please be patient while the chart is being deployed **
 
 {{- if eq .Values.display "WEBRTC" }}
-Navigate browser to: https://{{ .Release.Name }}-{{ .Release.Namespace }}.dyn.cloud.e-infra.cz
+Navigate browser to: https://{{ .Release.Name }}-{{ .Release.Namespace }}.dyn.cloud.trusted.e-infra.cz
 {{- else }}
-Navigate VNC viewer to: {{ .Release.Namespace }}-{{ .Release.Name }}.dyn.cloud.e-infra.cz:5900
+Navigate VNC viewer to: {{ .Release.Namespace }}-{{ .Release.Name }}.dyn.cloud.trusted.e-infra.cz:5900
 {{- end }}
