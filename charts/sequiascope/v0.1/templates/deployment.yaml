@@ -65,8 +65,16 @@ spec:
       - name: sequiascope-igv
         image: "{{ .Values.igv.image.repository }}:{{ .Values.igv.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.igv.image.pullPolicy }}
-        {{- range $key, $value := .Values.igv.extraEnv }}
         env:
+        - name: INPUT_DIR
+          value: /input_files
+        - name: OUTPUT_BASE_DIR
+          value: /output_files
+        - name: WATCH_DIR
+          value: /output_files/sessions
+        - name: PROCESSED_DIR
+          value: /output_files/.processed_batches
+        {{- range $key, $value := .Values.igv.extraEnv }}
         - name: {{ $key }}
           value: {{ $value | quote }}
         {{- end }}
@@ -78,12 +86,19 @@ spec:
           {{- toYaml .Values.igv.securityContext | nindent 10 }}
         volumeMounts:
         {{- if .Values.inputPersistence.enabled }}
-          - mountPath: /srv/igv-static
+          - mountPath: /input_files
             name: input-data
             readOnly: true
         {{- else }}
-          - mountPath: /srv/igv-static
+          - mountPath: /input_files
             name: input-data
+        {{- end }}
+        {{- if .Values.outputPersistence.enabled }}
+          - mountPath: /output_files
+            name: output-data
+        {{- else }}
+          - mountPath: /output_files
+            name: output-data
         {{- end }}
       volumes:
       - name: input-data
