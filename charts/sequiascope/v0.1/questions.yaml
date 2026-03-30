@@ -121,14 +121,6 @@ questions:
     group: "Input Persistence"
     show_if: "inputPersistence.enabled=true&&inputPersistence.existingClaim="
 
-  - variable: inputPersistence.storageClassName
-    label: Storage Class
-    description: Storage class for the input volume (leave empty for default)
-    type: string
-    default: ""
-    group: "Input Persistence"
-    show_if: "inputPersistence.enabled=true&&inputPersistence.existingClaim="
-
   # ====================
   # Output Persistence
   # ====================
@@ -147,14 +139,6 @@ questions:
     group: "Output Persistence"
     show_if: "outputPersistence.enabled=true"
 
-  - variable: outputPersistence.storageClassName
-    label: Storage Class
-    description: Storage class for the output volume (leave empty for default)
-    type: string
-    default: ""
-    group: "Output Persistence"
-    show_if: "outputPersistence.enabled=true"
-
   # ====================
   # Ingress
   # ====================
@@ -164,22 +148,6 @@ questions:
     type: boolean
     default: false
     group: "Ingress"
-
-  - variable: ingress.annotations
-    label: Ingress Annotations
-    description: "Enter annotations as key: value pairs, one per line"
-    type: multiline
-    default: "kubernetes.io/tls-acme: \"true\"\ncert-manager.io/cluster-issuer: \"letsencrypt-prod\""
-    group: "Ingress"
-    show_if: "ingress.enabled=true"
-
-  - variable: ingress.className
-    label: Ingress Class
-    description: Ingress class name
-    type: string
-    default: "nginx"
-    group: "Ingress"
-    show_if: "ingress.enabled=true"
 
   - variable: ingress.hosts[0].host
     label: Hostname
@@ -209,7 +177,7 @@ questions:
     label: Password
     description: Password for basic authentication
     type: password
-    default: "!cHaNgEmEpLeAsE!"
+    default: ""
     group: "Ingress"
     show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
 
@@ -220,11 +188,3 @@ questions:
     default: false
     group: "Ingress"
     show_if: "ingress.enabled=true"
-
-  - variable: ingress.tls.secretName
-    label: TLS Secret Name
-    description: Name of the Kubernetes secret containing the TLS certificate
-    type: string
-    default: "sequiascope-tls"
-    group: "Ingress"
-    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"

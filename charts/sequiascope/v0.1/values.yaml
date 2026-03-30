@@ -59,10 +59,10 @@ service:
 
 ingress:
   enabled: false
-  className: ""
-  annotations: {}
-  # kubernetes.io/tls-acme: "true"
-  # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  className: nginx
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
     - host: sequiascope.example.com
       paths:
