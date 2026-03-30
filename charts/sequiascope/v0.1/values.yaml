@@ -1,0 +1,99 @@
+replicaCount: 1
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Main application container
+sequiascope:
+  image:
+    repository: juraskovakaterina/sequiascope-app
+    pullPolicy: Always
+    tag: "latest"
+  extraEnv: {}
+  resources:
+    requests:
+      memory: 5Gi
+      cpu: 1
+    limits:
+      memory: 8Gi
+      cpu: 1
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+# IGV container
+igv:
+  image:
+    repository: juraskovakaterina/sequiascope-igv
+    pullPolicy: Always
+    tag: "latest"
+  extraEnv: {}
+  resources:
+    requests:
+      memory: 5Gi
+      cpu: 1
+    limits:
+      memory: 8Gi
+      cpu: 1
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+podAnnotations: {}
+podLabels: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  # kubernetes.io/tls-acme: "true"
+  # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: sequiascope.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    enabled: true
+    secretName: ""
+  auth:
+    enabled: true
+    username: "admin"
+    password: "!cHaNgEmEpLeAsE!"
+    existingSecret: "" # Name of existing secret to use (if set, username/password are ignored)
+
+inputPersistence:
+  enabled: true
+  accessModes:
+    - ReadWriteMany
+  size: 100Gi
+  storageClassName: ""
+  existingClaim: ""
+
+outputPersistence:
+  enabled: true
+  accessModes:
+    - ReadWriteMany
+  size: 100Gi
+  storageClassName: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

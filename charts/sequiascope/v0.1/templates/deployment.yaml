@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sequiascope.fullname" . }}
+  labels:
+    {{- include "sequiascope.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sequiascope.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sequiascope.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: sequiascope
+        image: "{{ .Values.sequiascope.image.repository }}:{{ .Values.sequiascope.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.sequiascope.image.pullPolicy }}
+        env:
+        - name: IGV_HOST
+          value: localhost
+        - name: IGV_PORT
+          value: "8081"
+        {{- range $key, $value := .Values.sequiascope.extraEnv }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.sequiascope.resources | nindent 10 }}
+        ports:
+        - containerPort: 8080
+        securityContext:
+          {{- toYaml .Values.sequiascope.securityContext | nindent 10 }}
+        volumeMounts:
+        {{- if .Values.inputPersistence.enabled }}
+          - mountPath: /input_files
+            name: input-data
+            readOnly: true
+        {{- else }}
+          - mountPath: /input_files
+            name: input-data
+        {{- end }}
+        {{- if .Values.outputPersistence.enabled }}
+          - mountPath: /output_files
+            name: output-data
+        {{- else }}
+          - mountPath: /output_files
+            name: output-data
+        {{- end }}
+      - name: sequiascope-igv
+        image: "{{ .Values.igv.image.repository }}:{{ .Values.igv.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.igv.image.pullPolicy }}
+        {{- range $key, $value := .Values.igv.extraEnv }}
+        env:
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.igv.resources | nindent 10 }}
+        ports:
+        - containerPort: 8081
+        securityContext:
+          {{- toYaml .Values.igv.securityContext | nindent 10 }}
+        volumeMounts:
+        {{- if .Values.inputPersistence.enabled }}
+          - mountPath: /srv/igv-static
+            name: input-data
+            readOnly: true
+        {{- else }}
+          - mountPath: /srv/igv-static
+            name: input-data
+        {{- end }}
+      volumes:
+      - name: input-data
+        {{- if .Values.inputPersistence.enabled }}
+          {{- if .Values.inputPersistence.existingClaim }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.inputPersistence.existingClaim }}
+          {{- else }}
+        persistentVolumeClaim:
+          claimName: {{ include "sequiascope.fullname" . }}-input-pvc
+          {{- end }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      - name: output-data
+        {{- if .Values.outputPersistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ include "sequiascope.fullname" . }}-output-pvc
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

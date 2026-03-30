@@ -1,0 +1,230 @@
+labels:
+  io.rancher.certified: CERIT-SC
+
+categories:
+- WEB Apps
+
+questions:
+  # ====================
+  # Sequiascope Container
+  # ====================
+  - variable: sequiascope.image.repository
+    label: Sequiascope Image Repository
+    description: Repository for the Sequiascope application container image
+    type: string
+    default: "juraskovakaterina/sequiascope-app"
+    group: "Sequiascope Container"
+
+  - variable: sequiascope.image.tag
+    label: Sequiascope Image Tag
+    description: Tag for the Sequiascope application container image
+    type: string
+    default: "latest"
+    group: "Sequiascope Container"
+
+  - variable: sequiascope.resources.requests.memory
+    label: Memory Request
+    description: Memory request for the Sequiascope container
+    type: string
+    default: "5Gi"
+    group: "Sequiascope Container"
+
+  - variable: sequiascope.resources.requests.cpu
+    label: CPU Request
+    description: CPU request for the Sequiascope container
+    type: string
+    default: "1"
+    group: "Sequiascope Container"
+
+  - variable: sequiascope.resources.limits.memory
+    label: Memory Limit
+    description: Memory limit for the Sequiascope container
+    type: string
+    default: "8Gi"
+    group: "Sequiascope Container"
+
+  - variable: sequiascope.resources.limits.cpu
+    label: CPU Limit
+    description: CPU limit for the Sequiascope container
+    type: string
+    default: "2"
+    group: "Sequiascope Container"
+
+  # ====================
+  # IGV Container
+  # ====================
+  - variable: igv.image.repository
+    label: IGV Image Repository
+    description: Repository for the IGV container image
+    type: string
+    default: "juraskovakaterina/sequiascope-igv"
+    group: "IGV Container"
+
+  - variable: igv.image.tag
+    label: IGV Image Tag
+    description: Tag for the IGV container image
+    type: string
+    default: "latest"
+    group: "IGV Container"
+
+  - variable: igv.resources.requests.memory
+    label: Memory Request
+    description: Memory request for the IGV container
+    type: string
+    default: "5Gi"
+    group: "IGV Container"
+
+  - variable: igv.resources.requests.cpu
+    label: CPU Request
+    description: CPU request for the IGV container
+    type: string
+    default: "1"
+    group: "IGV Container"
+
+  - variable: igv.resources.limits.memory
+    label: Memory Limit
+    description: Memory limit for the IGV container
+    type: string
+    default: "8Gi"
+    group: "IGV Container"
+
+  - variable: igv.resources.limits.cpu
+    label: CPU Limit
+    description: CPU limit for the IGV container
+    type: string
+    default: "1"
+    group: "IGV Container"
+
+  # ====================
+  # Input Persistence
+  # ====================
+  - variable: inputPersistence.enabled
+    label: Enable Input Persistence
+    description: Enable persistent storage for input data
+    type: boolean
+    default: true
+    group: "Input Persistence"
+
+  - variable: inputPersistence.existingClaim
+    label: Existing Claim
+    description: Name of an existing PVC to use for input data (leave empty to create a new one)
+    type: pvc
+    required: false
+    group: "Input Persistence"
+    show_if: "inputPersistence.enabled=true"
+
+  - variable: inputPersistence.size
+    label: Storage Size
+    description: Size of the input persistence volume
+    type: string
+    default: "100Gi"
+    group: "Input Persistence"
+    show_if: "inputPersistence.enabled=true&&inputPersistence.existingClaim="
+
+  - variable: inputPersistence.storageClassName
+    label: Storage Class
+    description: Storage class for the input volume (leave empty for default)
+    type: string
+    default: ""
+    group: "Input Persistence"
+    show_if: "inputPersistence.enabled=true&&inputPersistence.existingClaim="
+
+  # ====================
+  # Output Persistence
+  # ====================
+  - variable: outputPersistence.enabled
+    label: Enable Output Persistence
+    description: Enable persistent storage for output data
+    type: boolean
+    default: true
+    group: "Output Persistence"
+
+  - variable: outputPersistence.size
+    label: Storage Size
+    description: Size of the output persistence volume
+    type: string
+    default: "100Gi"
+    group: "Output Persistence"
+    show_if: "outputPersistence.enabled=true"
+
+  - variable: outputPersistence.storageClassName
+    label: Storage Class
+    description: Storage class for the output volume (leave empty for default)
+    type: string
+    default: ""
+    group: "Output Persistence"
+    show_if: "outputPersistence.enabled=true"
+
+  # ====================
+  # Ingress
+  # ====================
+  - variable: ingress.enabled
+    label: Enable Ingress
+    description: Enable external access via Ingress
+    type: boolean
+    default: false
+    group: "Ingress"
+
+  - variable: ingress.annotations
+    label: Ingress Annotations
+    description: "Enter annotations as key: value pairs, one per line"
+    type: multiline
+    default: "kubernetes.io/tls-acme: \"true\"\ncert-manager.io/cluster-issuer: \"letsencrypt-prod\""
+    group: "Ingress"
+    show_if: "ingress.enabled=true"
+
+  - variable: ingress.className
+    label: Ingress Class
+    description: Ingress class name
+    type: string
+    default: "nginx"
+    group: "Ingress"
+    show_if: "ingress.enabled=true"
+
+  - variable: ingress.hosts[0].host
+    label: Hostname
+    description: Hostname for accessing Sequiascope - replace {name}
+    type: string
+    default: "{name}.dyn.cloud.trusted.e-infra.cz"
+    group: "Ingress"
+    show_if: "ingress.enabled=true"
+
+  - variable: ingress.auth.enabled
+    label: Enable Authentication
+    description: Enable basic authentication for the application
+    type: boolean
+    default: true
+    group: "Ingress"
+    show_if: "ingress.enabled=true"
+
+  - variable: ingress.auth.username
+    label: Username
+    description: Username for basic authentication
+    type: string
+    default: "admin"
+    group: "Ingress"
+    show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
+
+  - variable: ingress.auth.password
+    label: Password
+    description: Password for basic authentication
+    type: password
+    default: "!cHaNgEmEpLeAsE!"
+    group: "Ingress"
+    show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
+
+  - variable: ingress.tls.enabled
+    label: Enable TLS
+    description: Enable TLS for the Ingress (hosts are automatically derived from the Ingress hostname)
+    type: boolean
+    default: false
+    group: "Ingress"
+    show_if: "ingress.enabled=true"
+
+  - variable: ingress.tls.secretName
+    label: TLS Secret Name
+    description: Name of the Kubernetes secret containing the TLS certificate
+    type: string
+    default: "sequiascope-tls"
+    group: "Ingress"
+    show_if: "ingress.enabled=true&&ingress.tls.enabled=true"

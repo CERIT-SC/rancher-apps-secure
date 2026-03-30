@@ -1,0 +1,39 @@
+{{- if and .Values.inputPersistence.enabled (not .Values.inputPersistence.existingClaim) -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "sequiascope.fullname" . }}-input-pvc
+  labels:
+    {{- include "sequiascope.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- range .Values.inputPersistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.inputPersistence.size | quote }}
+  {{- if .Values.inputPersistence.storageClassName }}
+  storageClassName: {{ .Values.inputPersistence.storageClassName | quote }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.outputPersistence.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "sequiascope.fullname" . }}-output-pvc
+  labels:
+    {{- include "sequiascope.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- range .Values.outputPersistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.outputPersistence.size | quote }}
+  {{- if .Values.outputPersistence.storageClassName }}
+  storageClassName: {{ .Values.outputPersistence.storageClassName | quote }}
+  {{- end }}
+{{- end }}
