@@ -63,18 +63,14 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  hosts:
-    - host: sequiascope.example.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  host: sequiascope.example.com
   tls:
     enabled: true
     secretName: ""
   auth:
     enabled: true
     username: "admin"
-    password: "!cHaNgEmEpLeAsE!"
+    password: ""
     existingSecret: "" # Name of existing secret to use (if set, username/password are ignored)
 
 inputPersistence:

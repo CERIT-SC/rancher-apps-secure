@@ -154,6 +154,7 @@ questions:
     description: Hostname for accessing Sequiascope - replace {name}
     type: string
     default: "{name}.dyn.cloud.trusted.e-infra.cz"
+    required: true
     group: "Ingress"
     show_if: "ingress.enabled=true"
 
@@ -170,6 +171,7 @@ questions:
     description: Username for basic authentication
     type: string
     default: "admin"
+    required: true
     group: "Ingress"
     show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
 
@@ -178,13 +180,14 @@ questions:
     description: Password for basic authentication
     type: password
     default: ""
+    required: true
     group: "Ingress"
     show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
 
   - variable: ingress.tls.enabled
     label: Enable TLS
-    description: Enable TLS for the Ingress (hosts are automatically derived from the Ingress hostname)
+    description: Enable TLS for the Ingress
     type: boolean
-    default: false
+    default: true
     group: "Ingress"
     show_if: "ingress.enabled=true"
