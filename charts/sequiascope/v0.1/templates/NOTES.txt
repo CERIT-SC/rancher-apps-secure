@@ -1,10 +1,6 @@
 {{- if .Values.ingress.enabled }}
 1. Your application runs on this URL:
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
-  {{- end }}
-{{- end }}
+  http{{ if $.Values.ingress.tls.enabled }}s{{ end }}://{{ $.Values.ingress.host }}
 {{- else if contains "NodePort" .Values.service.type }}
 1. Get the application URL by running these commands:
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "sequiascope.fullname" . }})
