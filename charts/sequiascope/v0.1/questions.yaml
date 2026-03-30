@@ -149,7 +149,7 @@ questions:
     default: false
     group: "Ingress"
 
-  - variable: ingress.hosts[0].host
+  - variable: ingress.host
     label: Hostname
     description: Hostname for accessing Sequiascope - replace {name}
     type: string
