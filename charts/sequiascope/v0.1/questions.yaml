@@ -170,8 +170,8 @@ questions:
     label: Password
     description: Password for basic authentication
     type: password
-    default: ""
     required: true
+    invalid_chars: "{}"
     group: "Ingress"
     show_if: "ingress.enabled=true&&ingress.auth.enabled=true"
 
