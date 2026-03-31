@@ -33,7 +33,7 @@ questions:
     label: CPU Request
     description: CPU request for the Sequiascope container
     type: string
-    default: "1"
+    default: "4"
     group: "Sequiascope Container"
 
   - variable: sequiascope.resources.limits.memory
@@ -47,7 +47,7 @@ questions:
     label: CPU Limit
     description: CPU limit for the Sequiascope container
     type: string
-    default: "2"
+    default: "8"
     group: "Sequiascope Container"
 
   # ====================
@@ -146,17 +146,8 @@ questions:
     label: Enable Ingress
     description: Enable external access via Ingress
     type: boolean
-    default: false
+    default: true
     group: "Ingress"
-
-  - variable: ingress.host
-    label: Hostname
-    description: Hostname for accessing Sequiascope - replace {name}
-    type: string
-    default: "{name}.dyn.cloud.trusted.e-infra.cz"
-    required: true
-    group: "Ingress"
-    show_if: "ingress.enabled=true"
 
   - variable: ingress.auth.enabled
     label: Enable Authentication

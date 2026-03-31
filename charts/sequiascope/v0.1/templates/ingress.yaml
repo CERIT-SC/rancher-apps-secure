@@ -37,14 +37,15 @@ spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
+  {{- $host := coalesce .Values.ingress.host (include "dns.name" .) }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
-        - {{ .Values.ingress.host | quote }}
-      secretName: {{ .Values.ingress.tls.secretName | default (printf "%s-tls" $fullName) }}
+        - {{ $host }}
+      secretName: {{ $host | replace "." "-" }}-tls
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.host | quote }}
+    - host: {{ $host }}
       http:
         paths:
           - path: /

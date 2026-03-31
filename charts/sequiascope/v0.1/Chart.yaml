@@ -2,7 +2,7 @@ apiVersion: v2
 name: sequiascope
 version: 1.0.0
 appVersion: 1.0.0
-description: A Helm chart for SeqUIaSCOPE - Shiny application for genomic data visualization
+description: A Helm chart for SeqUIaSCOPE - Shiny application for multi-omics data visualization
 keywords:
 - sequiascope
 - oncology

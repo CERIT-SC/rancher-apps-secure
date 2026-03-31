@@ -49,3 +49,14 @@ Selector labels
 app.kubernetes.io/name: {{ include "sequiascope.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Automatic DNS name generation
+*/}}
+{{- define "dns.name" -}}
+{{- if eq .Values.global.cattle.clusterName "kubas-cluster" -}}
+{{ printf "%s-%s.dyn.cloud.trusted.e-infra.cz" (trunc 15 .Release.Name) (trunc -15 .Release.Namespace) }}
+{{- else -}}
+{{ printf "%s-%s.dyn.cloud.e-infra.cz" (trunc 15 .Release.Name) (trunc -15 .Release.Namespace) }}
+{{- end -}}
+{{- end -}}
