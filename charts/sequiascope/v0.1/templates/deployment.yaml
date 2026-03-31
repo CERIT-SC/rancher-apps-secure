@@ -36,6 +36,8 @@ spec:
           value: localhost
         - name: IGV_PORT
           value: "8081"
+        - name: IGV_PATH_PREFIX
+          value: /igv-static
         {{- range $key, $value := .Values.sequiascope.extraEnv }}
         - name: {{ $key }}
           value: {{ $value | quote }}
