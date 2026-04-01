@@ -7,9 +7,13 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service.appPort }}
       targetPort: 8080
       protocol: TCP
-      name: http
+      name: app
+    - port: {{ .Values.service.igvPort }}
+      targetPort: 8081
+      protocol: TCP
+      name: igv
   selector:
     {{- include "sequiascope.selectorLabels" . | nindent 4 }}

@@ -32,10 +32,18 @@ spec:
         image: "{{ .Values.sequiascope.image.repository }}:{{ .Values.sequiascope.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.sequiascope.image.pullPolicy }}
         env:
+          {{- if .Values.ingress.enabled }}
+          {{- $host := coalesce .Values.ingress.host (include "dns.name" .) }}
+        - name: IGV_HOST
+          value: {{ $host }}
+        - name: IGV_PORT
+          value: {{ ternary "443" "80" .Values.ingress.tls.enabled }}
+          {{- else }}
         - name: IGV_HOST
           value: localhost
         - name: IGV_PORT
           value: "8081"
+          {{- end }}
         - name: IGV_PATH_PREFIX
           value: /igv-static
         {{- range $key, $value := .Values.sequiascope.extraEnv }}

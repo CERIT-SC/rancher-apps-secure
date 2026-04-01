@@ -14,7 +14,7 @@ sequiascope:
   resources:
     requests:
       memory: 5Gi
-      cpu: 4
+      cpu: 1
     limits:
       memory: 8Gi
       cpu: 8
@@ -55,7 +55,8 @@ podLabels: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  appPort: 8080
+  igvPort: 8081
 
 ingress:
   enabled: true
