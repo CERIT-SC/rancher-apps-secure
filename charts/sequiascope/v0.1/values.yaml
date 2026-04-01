@@ -58,6 +58,9 @@ service:
   appPort: 8080
   igvPort: 8081
 
+networkPolicy:
+  enabled: true
+
 ingress:
   enabled: true
   className: nginx
