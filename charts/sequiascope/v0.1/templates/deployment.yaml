@@ -35,9 +35,9 @@ spec:
           {{- if .Values.ingress.enabled }}
           {{- $host := coalesce .Values.ingress.host (include "dns.name" .) }}
         - name: IGV_HOST
-          value: {{ $host }}
+          value: {{ $host | quote}}
         - name: IGV_PORT
-          value: {{ ternary "443" "80" .Values.ingress.tls.enabled }}
+          value: {{ ternary "443" "80" .Values.ingress.tls.enabled | quote }}
           {{- else }}
         - name: IGV_HOST
           value: localhost
