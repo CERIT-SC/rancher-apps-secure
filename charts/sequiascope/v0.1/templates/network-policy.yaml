@@ -1,0 +1,24 @@
+{{- if eq .Values.networkpolicy true -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "sequiascope.fullname" . }}
+  labels:
+    {{- include "sequiascope.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "sequiascope.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+     - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: TCP
+      port: {{ .Values.service.appPort }}
+    - protocol: TCP
+      port: {{ .Values.service.igvPort }}
+{{- end -}}
