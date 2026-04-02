@@ -28,7 +28,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-      - name: sequiascope
+      - name: sequiascope-app
         image: "{{ .Values.sequiascope.image.repository }}:{{ .Values.sequiascope.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.sequiascope.image.pullPolicy }}
         env:
