@@ -33,6 +33,8 @@ igv:
   extraEnv: 
     - name: HTTPS_PROXY
       value: http://proxy.muni.cz:3128
+    - name: JAVA_TOOL_OPTIONS
+      value: "-Duser.home=/root -Dhttps.proxyHost=proxy.muni.cz -Dhttps.proxyPort=3128 -Dhttp.proxyHost=proxy.muni.cz -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts=localhost|127.0.0.1|*.cluster. Local"
   resources:
     requests:
       memory: 5Gi
