@@ -50,6 +50,7 @@ spec:
         - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end }}
+        resources:
           {{- toYaml .Values.sequiascope.resources | nindent 10 }}
         ports:
         - containerPort: 8080
