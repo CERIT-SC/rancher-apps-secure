@@ -57,21 +57,13 @@ spec:
         securityContext:
           {{- toYaml .Values.sequiascope.securityContext | nindent 10 }}
         volumeMounts:
-        {{- if .Values.inputPersistence.enabled }}
           - mountPath: /input_files
             name: input-data
+            {{- if .Values.inputPersistence.existingClaim }}
             readOnly: true
-        {{- else }}
-          - mountPath: /input_files
-            name: input-data
-        {{- end }}
-        {{- if .Values.outputPersistence.enabled }}
+            {{- end }}
           - mountPath: /output_files
             name: output-data
-        {{- else }}
-          - mountPath: /output_files
-            name: output-data
-        {{- end }}
       - name: sequiascope-igv
         image: "{{ .Values.igv.image.repository }}:{{ .Values.igv.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.igv.image.pullPolicy }}
@@ -95,21 +87,13 @@ spec:
         securityContext:
           {{- toYaml .Values.igv.securityContext | nindent 10 }}
         volumeMounts:
-        {{- if .Values.inputPersistence.enabled }}
           - mountPath: /input_files
             name: input-data
+            {{- if .Values.inputPersistence.existingClaim }}
             readOnly: true
-        {{- else }}
-          - mountPath: /input_files
-            name: input-data
-        {{- end }}
-        {{- if .Values.outputPersistence.enabled }}
+            {{- end }}
           - mountPath: /output_files
             name: output-data
-        {{- else }}
-          - mountPath: /output_files
-            name: output-data
-        {{- end }}
       volumes:
       - name: input-data
         {{- if .Values.inputPersistence.enabled }}
