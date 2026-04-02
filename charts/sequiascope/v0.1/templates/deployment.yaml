@@ -47,8 +47,8 @@ spec:
         - name: IGV_PATH_PREFIX
           value: /igv-static
         {{- range .Values.sequiascope.extraEnv }}
-          - name: {{ .name }}
-            value: {{ .value | quote }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
         {{- end }}
           {{- toYaml .Values.sequiascope.resources | nindent 10 }}
         ports:
@@ -84,8 +84,8 @@ spec:
         - name: PROCESSED_DIR
           value: /output_files/.processed_batches
         {{- range .Values.igv.extraEnv }}
-          - name: {{ .name }}
-            value: {{ .value | quote }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
         {{- end }}
         resources:
           {{- toYaml .Values.igv.resources | nindent 10 }}
