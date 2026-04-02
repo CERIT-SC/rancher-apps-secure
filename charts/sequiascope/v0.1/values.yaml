@@ -30,7 +30,9 @@ igv:
     repository: juraskovakaterina/sequiascope-igv
     pullPolicy: Always
     tag: "latest"
-  extraEnv: {}
+  extraEnv: 
+    - name: HTTPS_PROXY
+      value: http://proxy.muni.cz:3128
   resources:
     requests:
       memory: 5Gi
