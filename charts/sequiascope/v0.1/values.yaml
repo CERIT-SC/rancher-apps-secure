@@ -9,7 +9,7 @@ sequiascope:
   image:
     repository: juraskovakaterina/sequiascope-app
     pullPolicy: Always
-    tag: "latest"
+    tag: "1.0.0"
   extraEnv: {}
   resources:
     requests:
@@ -29,7 +29,7 @@ igv:
   image:
     repository: juraskovakaterina/sequiascope-igv
     pullPolicy: Always
-    tag: "latest"
+    tag: "1.0.0"
   extraEnv: 
     - name: HTTPS_PROXY
       value: http://proxy.muni.cz:3128
